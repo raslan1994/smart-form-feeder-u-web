@@ -26,7 +26,7 @@ function FormView(){
         var fieldSet = this.activeResultSet.pages;
         if(fieldSet != null && fieldSet.length > 0){
             var resultHtmlBegining = '<div class="row">';
-            resultHtmlBegining += '<form>';
+            resultHtmlBegining += '<form action="'+ this_.activeResultSet.requestURL +'" method="' + this.activeResultSet.requestMethod + '">';
 
             fieldSet.forEach(function (field,fieldIndex) {
                 var fieldTemplateBegining = '<div class="form-group">';
@@ -37,7 +37,7 @@ function FormView(){
                 resultHtmlBegining += fieldTemplateBegining + fieldTemplateEnd;
             });
 
-            var resultHtmlEnd = '</form></div>';
+            var resultHtmlEnd = '<button class="btn btn-primary btn-sm" type="submit">Submit</button></form></div>';
 
             this_.resultPart.innerHTML = resultHtmlBegining + resultHtmlEnd;
         }
