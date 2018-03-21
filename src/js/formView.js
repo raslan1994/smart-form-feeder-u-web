@@ -2,6 +2,9 @@
  * Created by raslanrauff on 3/18/18.
  */
 
+const PART_INPUT = 'ip';
+const PART_RESULT = 'rp';
+const PART_LOADER = 'lp';
 
 function FormView(){
     var this_ = this;
@@ -10,7 +13,52 @@ function FormView(){
     this.layoutDisplay = null;
     this.currentPreviewCtx = null;
     this.uploadImgs = [];
+
+    //Visual units
     this.loaderPart = null;
+    this.inputPart = null;
+    this.resultPart = null;
+
+    this.activeResultSet = [];
+    this.displayResult = function () {
+        if(this_.activeResultSet == null) return;
+
+        var fieldSet = this.activeResultSet.pages;
+        if(fieldSet != null && fieldSet.length > 0){
+            var resultHtmlBegining = '<div class="row">';
+            resultHtmlBegining += '<form>';
+
+            fieldSet.forEach(function (field,fieldIndex) {
+                var fieldTemplateBegining = '<div class="form-group">';
+                fieldTemplateBegining += '<label>' + field.field +'</label>';
+                fieldTemplateBegining += '<input type="text" class="form-control" value="' + field.value +'"/>';
+                var fieldTemplateEnd = '</div>';
+
+                resultHtmlBegining += fieldTemplateBegining + fieldTemplateEnd;
+            });
+
+            var resultHtmlEnd = '</form></div>';
+
+            this_.resultPart.innerHTML = resultHtmlBegining + resultHtmlEnd;
+        }
+
+    },
+    this.setPartVisibility = function(part,isVisible){
+        var displayStyle = isVisible ? '' : 'none';
+        switch (part){
+            case PART_INPUT:
+                this_.inputPart.style.display = displayStyle;
+                break;
+            case PART_RESULT:
+                this_.resultPart.style.display = displayStyle;
+                break;
+            case PART_LOADER:
+                this_.loaderPart.style.display = displayStyle;
+                break;
+            default:
+                break;
+        };
+    },
     this.setLoader=function (isVisible) {
         if(isVisible){
             this_.loaderPart.style.display = '';
@@ -28,17 +76,38 @@ function FormView(){
         oReq.open("POST", HOST + FORM_INSERT_URL + '?li=0', true);
         oReq.onload = function(oEvent) {
             if (oReq.status == 200) {
-                console.log(JSON.parse(oEvent.target.response));
+                //set data set
+                this_.activeResultSet = JSON.parse(oEvent.target.response);
+
+                //preview results
+                this_.displayResult();
+
+                //hide loader
+                this_.setPartVisibility(PART_LOADER,false);
+
+                //display management
+                this_.setPartVisibility(PART_RESULT, true);
+                console.log(this_.activeResultSet);
             } else {
-                console.log("Error " + oReq.status + " occurred when trying to upload your file.<br \/>");
+                this_.activeResultSet = null;
+                console.error("Error " + oReq.status + " occurred when trying to upload your file.<br \/>");
+
+                //show input part again
+                this_.setPartVisibility(PART_INPUT,true);
+
+                //hide loader
+                this_.setPartVisibility(PART_LOADER,false);
             }
 
             //hide loader
-            this_.setLoader(false);
+            this_.setPartVisibility(PART_RESULT,true);
         };
 
-        //dsiplayloader
-        this_.setLoader(true);
+        //disable input part
+        this_.setPartVisibility(PART_INPUT,false);
+
+        //dsiplay loader
+        this_.setPartVisibility(PART_LOADER,true);
 
         //request
         oReq.send(fd);
@@ -98,9 +167,13 @@ function FormView(){
         var index = getParameterByName('li');
         var url = HOST + FORM_LAYOUT_URL + "?i=" + index;
 
-        //show loader
+        //initialize units
         this_.loaderPart = document.getElementById('loaderPart');
-        this_.setLoader(true);
+        this_.resultPart = document.getElementById('resultPart');
+        this_.inputPart = document.getElementById('inputPart');
+
+        //show loader
+        this_.setPartVisibility(PART_LOADER,true);
 
         getJSON(url,function (err, resp) {
             this_.formLayout = resp;
@@ -122,10 +195,13 @@ function FormView(){
                 templateHtmlBegin += '<button class="btn btn-sm btn-primary" onclick="view.feedForm(); return false;">Confirm & Submit</button>'
 
                 this_.layoutDisplay.innerHTML = templateHtmlBegin + templateHtmlEnd;
+
+                //enable input part
+                this_.setPartVisibility(PART_INPUT,true);
             }
 
             //hide loader
-            this_.setLoader(false);
+            this_.setPartVisibility(PART_LOADER,false);
         });
     };
 }
