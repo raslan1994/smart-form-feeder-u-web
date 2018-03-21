@@ -1,0 +1,21 @@
+[{
+  "field":"name",
+  "x":20,
+  "y":80,
+  "width":530,
+  "height":190
+},
+{
+  "field":"field2",
+  "x":20,
+  "y":300,
+  "width":530,
+  "height":160
+},
+{
+  "field":"field2",
+  "x":20,
+  "y":480,
+  "width":530,
+  "height":190
+}]

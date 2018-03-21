@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout Preview</title>
+    <script src="tmp/layoutPreview.js"></script>
+</head>
+<body>
+    <img id="layoutImage" style="display: none;"/>
+    <canvas id="layoutPreview"></canvas>
+
+    <!-- Site Script -->
+    <script src="src/js/layoutPreviewView.js"></script>
+    <script>
+        var view = new LayoutPreviewView();
+        view.init();
+    </script>
+</body>
+</html>
