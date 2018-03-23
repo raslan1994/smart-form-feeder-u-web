@@ -59,6 +59,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="previewModalLabel"></h5>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>Image Threshould</label>
+                            <input id="thresholdChooser" type="number" max="255" min="0">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" onclick="view.onThresholdChange();">Change</button>
+                        </div>
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -5,6 +5,7 @@
 const PART_INPUT = 'ip';
 const PART_RESULT = 'rp';
 const PART_LOADER = 'lp';
+const DEFAULT_IMAGE_THRESHOLD= 100;
 
 function FormView(){
     var this_ = this;
@@ -12,8 +13,11 @@ function FormView(){
     this.formLayout = {};
     this.activeLayoutIndex = 0;
     this.layoutDisplay = null;
-    this.activeThreshould = 168;
+    this.thresholdChooser = null;
+    this.activeThreshold = DEFAULT_IMAGE_THRESHOLD;
     this.currentPreviewCtx = null;
+    this.activePreviewData = null;
+    this.activePreviewDataIndex = null;
     this.uploadImgs = [];
 
     //Visual units
@@ -127,7 +131,7 @@ function FormView(){
         ctx.strokeStyle = field.color;
         ctx.stroke();
     };
-    this.openPreview = function (e,index) {
+    this.adjustPreview = function (e,index) {
         var canvas = document.getElementById('layoutPreviewCanvas');
         var ctx = canvas.getContext('2d');
         var url = URL.createObjectURL(e.files[0]);
@@ -140,7 +144,7 @@ function FormView(){
             ctx.drawImage(img, 0, 0);
 
             var pixels = ctx.getImageData(0,0, width,height);
-            applyThreshold(pixels,this_.activeThreshould);
+            applyThreshold(pixels,this_.activeThreshold);
             ctx.putImageData(pixels,0,0);
 
             var bwImg = dataURItoBlob(canvas.toDataURL());
@@ -157,12 +161,25 @@ function FormView(){
                 this_.highlightInputArea(field,ctx);
             });
 
+            //reference data for later use like "onThresholdChange" event
+            this_.activePreviewData = e;
+            this_.activePreviewDataIndex = index;
+
             //setup model title
             document.getElementById('previewModalLabel').innerHTML = "Page " + (index+1);
 
             $('#previewModal').modal({});
         };
+
         img.src = url;
+    },
+    this.onThresholdChange = function () {
+        this_.activeThreshold = this_.thresholdChooser.value;
+
+        this_.adjustPreview(this_.activePreviewData, this_.activePreviewDataIndex);
+    },
+    this.openPreview = function (e,index) {
+        this_.adjustPreview(e,index);
         console.log(e);
     },
     this.init = function () {
@@ -170,6 +187,9 @@ function FormView(){
         var url = HOST + FORM_LAYOUT_URL + "?i=" + index;
 
         this_.activeLayoutIndex = index;
+        this_.thresholdChooser = document.getElementById("thresholdChooser");
+
+        this_.thresholdChooser.value = this_.activeThreshold;
 
         //initialize units
         this_.loaderPart = document.getElementById('loaderPart');
