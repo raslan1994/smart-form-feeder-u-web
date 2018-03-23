@@ -19,3 +19,8 @@ body {
 .layoutPreview .modal-dialog .modal-content .modal-body{
     overflow: scroll;
 }
+.templates-grid{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

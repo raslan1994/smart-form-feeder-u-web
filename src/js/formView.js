@@ -10,7 +10,9 @@ function FormView(){
     var this_ = this;
     this.pages = [];
     this.formLayout = {};
+    this.activeLayoutIndex = 0;
     this.layoutDisplay = null;
+    this.activeThreshould = 168;
     this.currentPreviewCtx = null;
     this.uploadImgs = [];
 
@@ -73,7 +75,7 @@ function FormView(){
         });
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", HOST + FORM_INSERT_URL + '?li=0', true);
+        oReq.open("POST", HOST + FORM_INSERT_URL + '?li='+this_.activeLayoutIndex, true);
         oReq.onload = function(oEvent) {
             if (oReq.status == 200) {
                 //set data set
@@ -138,7 +140,7 @@ function FormView(){
             ctx.drawImage(img, 0, 0);
 
             var pixels = ctx.getImageData(0,0, width,height);
-            applyThreshold(pixels,90);
+            applyThreshold(pixels,this_.activeThreshould);
             ctx.putImageData(pixels,0,0);
 
             var bwImg = dataURItoBlob(canvas.toDataURL());
@@ -166,6 +168,8 @@ function FormView(){
     this.init = function () {
         var index = getParameterByName('li');
         var url = HOST + FORM_LAYOUT_URL + "?i=" + index;
+
+        this_.activeLayoutIndex = index;
 
         //initialize units
         this_.loaderPart = document.getElementById('loaderPart');
