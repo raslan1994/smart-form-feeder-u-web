@@ -4,15 +4,19 @@
 const FORM_LAYOUT_URL = "/formLayouts";
 const FORM_INSERT_URL = "/feed";
 const HOST = "http://localhost:8081";
+const LOGIN_URL = "/login";
 
 var getJSON = function(url, callback) {
     var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
     xhr.open('GET', url, true);
     xhr.responseType = 'json';
     xhr.onload = function() {
         var status = xhr.status;
         if (status === 200) {
             callback(null, xhr.response);
+        } else if(status == 401){
+            window.location.href = HOST + LOGIN_URL;
         } else {
             callback(status, xhr.response);
         }
@@ -29,6 +33,12 @@ var getParameterByName = function(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
+
+var getCookie = function(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
 
 function handleImage(e,canvas,ctx){
     var reader = new FileReader();

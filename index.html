@@ -26,10 +26,6 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
             </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
     </nav>
 
@@ -37,32 +33,8 @@
         <div class="row">
             <h3>Available Form templates</h3>
         </div>
-        <div class="row">
-            <ul class="templates-grid">
-                <li>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Sample Template 1</h5>
-                            <p class="card-text">
-                                <strong>Pages : 2</strong>
-                            </p>
-                            <a href="form.html?li=0" class="btn btn-primary">More info</a>
-                        </div>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Sample Template 2</h5>
-                            <p class="card-text">
-                                <strong>Pages : 1</strong>
-                            </p>
-                            <a href="form.html?li=1" class="btn btn-primary">More info</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+        <div class="row" id="formLayoutGrid">
+            <h3>Loading please wait..</h3>
         </div>
     </div>
 
@@ -72,5 +44,13 @@
     <script src="src/js/popper.min.js"></script>
     <script src="src/js/offcanvas.js"></script>
     <script src="src/js/bootstrap.min.js"></script>
+
+    <!-- Site Script -->
+    <script src="src/js/util.js"></script>
+    <script src="src/js/layoutPreviewView.js"></script>
+    <script>
+        var view = new LayoutPreviewView();
+        view.init();
+    </script>
 </body>
 </html>

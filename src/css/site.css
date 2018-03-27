@@ -28,3 +28,10 @@ body {
     margin: 5px;
     display: inline-block;
 }
+#formLayoutGrid .title{
+    font-weight: bold;
+}
+
+#formLayoutGrid form .form-group{
+    margin: 0;
+}
