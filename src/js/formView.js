@@ -11,6 +11,7 @@ function FormView(){
     var this_ = this;
     this.pages = [];
     this.formLayout = {};
+    this.activeTemplate = null;
     this.activeLayoutIndex = 0;
     this.layoutDisplay = null;
     this.thresholdChooser = null;
@@ -79,6 +80,7 @@ function FormView(){
         });
 
         var oReq = new XMLHttpRequest();
+        oReq.withCredentials = true;
         oReq.open("POST", HOST + FORM_INSERT_URL + '?li='+this_.activeLayoutIndex, true);
         oReq.onload = function(oEvent) {
             if (oReq.status == 200) {
@@ -188,6 +190,7 @@ function FormView(){
 
         this_.activeLayoutIndex = index;
         this_.thresholdChooser = document.getElementById("thresholdChooser");
+        this_.activeTemplate = document.getElementById("activeTemplate");
 
         this_.thresholdChooser.value = this_.activeThreshold;
 
@@ -219,6 +222,7 @@ function FormView(){
                 templateHtmlBegin += '<button class="btn btn-sm btn-primary" onclick="view.feedForm(); return false;">Confirm & Submit</button>'
 
                 this_.layoutDisplay.innerHTML = templateHtmlBegin + templateHtmlEnd;
+                this_.activeTemplate.innerHTML = resp.name;
 
                 //enable input part
                 this_.setPartVisibility(PART_INPUT,true);
