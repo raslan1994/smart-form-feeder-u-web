@@ -10,7 +10,9 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="#">SFF</a>
+        <a class="navbar-brand" href="">
+            <img src="src/img/logo-small.png"/>
+        </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,6 +28,15 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>-->
             </ul>
+            <form class="form-inline mt-2 mt-md-0" onsubmit="return false;">
+                <div class="form-group">
+                    <img src="src/img/user-ico.png" width="40" height="40"/>
+                </div>
+                <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+                    <label id="lbl_username">username</label>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="loginView.onLogoutClick();">Logout</button>
+            </form>
             <!--<form class="form-inline mt-2 mt-md-0">
                 <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -59,17 +70,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="previewModalLabel"></h5>
-                    <div class="form-inline">
+                    <div class="form-inline" style="margin: auto">
                         <div class="form-group">
                             <label>Image Threshould</label>
-                            <input id="thresholdChooser" type="number" max="255" min="0">
+                            <input id="thresholdChooser" class="form-control" style="margin-left: 10px;" type="number" max="255" min="0">
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-sm" onclick="view.onThresholdChange();">Change</button>
+                        <div class="form-group" style="margin-left: 10px;">
+                            <button class="btn btn-primary" onclick="view.onThresholdChange();">Change</button>
                         </div>
                     </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">
+                        Done
+                        <!--<span aria-hidden="true">&times;</span>-->
                     </button>
                 </div>
                 <div class="modal-body">
@@ -93,7 +105,14 @@
     <!-- Site Script -->
     <script src="src/js/util.js"></script>
     <script src="src/js/formView.js"></script>
+    <script src="src/js/loginView.js"></script>
     <script>
+        //Login View
+        var loginView = new LoginView();
+        loginView.init();
+        loginView.checkAndDisplayUserDetails();
+
+        //Form View
         var view = new FormView();
         view.init();
     </script>

@@ -10,14 +10,16 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="#">SFF</a>
+        <a class="navbar-brand" href="">
+            <img src="src/img/logo-small.png"/>
+        </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbarCollapse" style="">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="">Home</a>
                 </li>
                 <!--<li class="nav-item">
                     <a class="nav-link" href="#">New Form</a>
@@ -26,6 +28,15 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>-->
             </ul>
+            <form class="form-inline mt-2 mt-md-0" onsubmit="return false;">
+                <div class="form-group">
+                    <img src="src/img/user-ico.png" width="40" height="40"/>
+                </div>
+                <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+                    <label id="lbl_username">username</label>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="loginView.onLogoutClick();">Logout</button>
+            </form>
         </div>
     </nav>
 
@@ -48,7 +59,14 @@
     <!-- Site Script -->
     <script src="src/js/util.js"></script>
     <script src="src/js/layoutPreviewView.js"></script>
+    <script src="src/js/loginView.js"></script>
     <script>
+        //Login View
+        var loginView = new LoginView();
+        loginView.init();
+        loginView.checkAndDisplayUserDetails();
+
+        //Layout preview view
         var view = new LayoutPreviewView();
         view.init();
     </script>

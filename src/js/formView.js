@@ -33,6 +33,14 @@ function FormView(){
         var fieldSet = this.activeResultSet.pages;
         if(fieldSet != null && fieldSet.length > 0){
             var resultHtmlBegining = '<div class="row">';
+            resultHtmlBegining += '<div class="alert alert-primary" role="alert">';
+            resultHtmlBegining += '<small><strong>Request URL</strong></small></br>';
+            resultHtmlBegining += '<strong>' +this_.activeResultSet.requestMethod.toUpperCase() + '</strong> ' + this_.activeResultSet.requestURL;
+            resultHtmlBegining += '</div>';
+            resultHtmlBegining += '</div>';
+
+
+            resultHtmlBegining += '<div class="row">';
             resultHtmlBegining += '<form action="'+ this_.activeResultSet.requestURL +'" method="' + this.activeResultSet.requestMethod + '">';
 
             fieldSet.forEach(function (field,fieldIndex) {

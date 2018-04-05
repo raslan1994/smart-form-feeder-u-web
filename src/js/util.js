@@ -5,6 +5,7 @@ const FORM_LAYOUT_URL = "/formLayouts";
 const FORM_INSERT_URL = "/feed";
 const HOST = "http://localhost:8081";
 const LOGIN_URL = "/login";
+const LOGOUT_URL = "/logout";
 
 var getJSON = function(url, callback) {
     var xhr = new XMLHttpRequest();

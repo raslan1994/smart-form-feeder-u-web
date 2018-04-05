@@ -35,3 +35,7 @@ body {
 #formLayoutGrid form .form-group{
     margin: 0;
 }
+
+#lbl_username{
+    color: #ffffff;
+}
